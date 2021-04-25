@@ -20,6 +20,7 @@ import com.brandonbaylosis.podplay.viewmodel.PodcastViewModel
 import com.brandonbaylosis.podplay.viewmodel.SearchViewModel
 import com.brandonbaylosis.repository.ItunesRepo
 import com.brandonbaylosis.repository.PodcastRepo
+import com.brandonbaylosis.service.FeedService
 import com.brandonbaylosis.service.ItunesService
 import kotlinx.android.synthetic.main.activity_podcast.*
 
@@ -108,8 +109,8 @@ class PodcastActivity : AppCompatActivity(),
         val service = ItunesService.instance
         searchViewModel.iTunesRepo = ItunesRepo(service)
         // new instance of PodcastRepo is assigned to the podcastViewModel.podcastRepo property
-        podcastViewModel.podcastRepo = PodcastRepo()
-    }
+        val rssService = FeedService.instance
+        podcastViewModel.podcastRepo = PodcastRepo(rssService)    }
 
     private fun updateControls() {
         podcastRecyclerView.setHasFixedSize(true)

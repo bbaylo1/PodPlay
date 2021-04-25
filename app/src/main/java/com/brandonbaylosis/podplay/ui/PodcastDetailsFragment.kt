@@ -1,16 +1,21 @@
 package com.brandonbaylosis.podplay.ui
 
 import android.os.Bundle
+import android.text.method.ScrollingMovementMethod
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.brandonbaylosis.podplay.R
+import com.brandonbaylosis.podplay.adapter.EpisodeListAdapter
 import com.brandonbaylosis.podplay.viewmodel.PodcastViewModel
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.fragment_podcast_details.*
 
 class PodcastDetailsFragment : Fragment() {
     private val podcastViewModel: PodcastViewModel by activityViewModels()
+    private lateinit var episodeListAdapter: EpisodeListAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // 1
@@ -24,6 +29,7 @@ class PodcastDetailsFragment : Fragment() {
     }
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        setupControls()
         updateControls()
     }
     // 2
@@ -48,5 +54,21 @@ class PodcastDetailsFragment : Fragment() {
         fun newInstance(): PodcastDetailsFragment {
             return PodcastDetailsFragment()
         }
+    }
+
+    private fun setupControls() {
+        // 1
+        feedDescTextView.movementMethod = ScrollingMovementMethod()
+        // 2
+        episodeRecyclerView.setHasFixedSize(true)
+        val layoutManager = LinearLayoutManager(activity)
+        episodeRecyclerView.layoutManager = layoutManager
+        val dividerItemDecoration = DividerItemDecoration(
+            episodeRecyclerView.context, layoutManager.orientation)
+        episodeRecyclerView.addItemDecoration(dividerItemDecoration)
+        // 3
+        episodeListAdapter = EpisodeListAdapter(
+            podcastViewModel.activePodcastViewData?.episodes)
+        episodeRecyclerView.adapter = episodeListAdapter
     }
 }
