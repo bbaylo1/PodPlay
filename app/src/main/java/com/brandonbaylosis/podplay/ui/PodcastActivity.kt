@@ -154,7 +154,7 @@ class PodcastActivity : AppCompatActivity(),
                     // display the detail fragment
                 showDetailsFragment()
             } else {
-                // 6 If data null, dispaly error dialog
+                // 6 If data null, display error dialog
                 showError("Error loading feed $feedUrl")
             }
         }
