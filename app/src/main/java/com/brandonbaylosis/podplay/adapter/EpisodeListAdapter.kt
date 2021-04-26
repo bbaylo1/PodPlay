@@ -13,8 +13,8 @@ import kotlinx.android.synthetic.main.episode_item.view.*
 
 
 class EpisodeListAdapter(
-    private var episodeViewList: List<PodcastViewModel.EpisodeViewData>?) :
-    RecyclerView.Adapter<EpisodeListAdapter.ViewHolder>() {
+    private var episodeViewList: List<PodcastViewModel.EpisodeViewData>?)
+    : RecyclerView.Adapter<EpisodeListAdapter.ViewHolder>() {
 
     class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
         var episodeViewData: PodcastViewModel.EpisodeViewData? = null
@@ -33,6 +33,7 @@ class EpisodeListAdapter(
         
         holder.episodeViewData = episodeView
         holder.titleTextView.text = episodeView.title
+        // Used for the episode descriptions
         holder.descTextView.text = HtmlUtils.htmlToSpannable(episodeView.description ?: "")
         holder.durationTextView.text = episodeView.duration
         holder.releaseDateTextView.text = episodeView.releaseDate?.let { DateUtils.dateToShortDate(it)

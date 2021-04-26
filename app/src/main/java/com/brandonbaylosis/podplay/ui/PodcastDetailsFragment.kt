@@ -18,21 +18,27 @@ class PodcastDetailsFragment : Fragment() {
     private lateinit var episodeListAdapter: EpisodeListAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // 1
+        // 1 Call to setHasOptionsMenu() tells Android that this Fragment wants to add
+        // items to the options menu. This causes the Fragment to receive a call to
+        // onCreateOptionsMenu()
         setHasOptionsMenu(true)
     }
+
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(
             R.layout.fragment_podcast_details,
             container, false)
     }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         setupControls()
         updateControls()
     }
-    // 2
+
+    // 2 onCreateOptionsMenu() inflates the menu_details options menu so its items
+    //are added to the podcast Activity menu.
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater
     ) {
         super.onCreateOptionsMenu(menu, inflater)
@@ -57,16 +63,17 @@ class PodcastDetailsFragment : Fragment() {
     }
 
     private fun setupControls() {
-        // 1
+        // 1 Allows feed title to scroll if it gets too long for the container
         feedDescTextView.movementMethod = ScrollingMovementMethod()
-        // 2
+        // 2 Setup code for episode list RecyclerView
         episodeRecyclerView.setHasFixedSize(true)
         val layoutManager = LinearLayoutManager(activity)
         episodeRecyclerView.layoutManager = layoutManager
         val dividerItemDecoration = DividerItemDecoration(
             episodeRecyclerView.context, layoutManager.orientation)
         episodeRecyclerView.addItemDecoration(dividerItemDecoration)
-        // 3
+        // 3 Create the EpisodelistAdapter with the list of episodes in
+        // activePodcastViewData and assign it to episodeRecyclerView.
         episodeListAdapter = EpisodeListAdapter(
             podcastViewModel.activePodcastViewData?.episodes)
         episodeRecyclerView.adapter = episodeListAdapter

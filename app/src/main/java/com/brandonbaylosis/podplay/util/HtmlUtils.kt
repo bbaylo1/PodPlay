@@ -6,11 +6,12 @@ import android.text.Spanned
 
 object HtmlUtils {
     fun htmlToSpannable(htmlDesc: String): Spanned {
-        // 1
+        // 1 Strip out all \n characters and <img> elements from the text before
+        // converting the text to a Spanned object
         var newHtmlDesc = htmlDesc.replace("\n".toRegex(), "")
         newHtmlDesc = newHtmlDesc.replace("(<(/)img>)|(<img.+?>)".
         toRegex(), "")
-        // 2
+        // 2 Android’s Html.fromHtml method is used to convert the text to a Spanned object.
         val descSpan: Spanned
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             descSpan = Html.fromHtml(newHtmlDesc,

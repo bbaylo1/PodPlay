@@ -5,21 +5,23 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 object DateUtils {
+    // This method converts the date returned from iTunes into a simple month, date and
+    // year format using the user’s current locale
     fun jsonDateToShortDate(jsonDate: String?): String {
-        //1
+        //1 Checks that jsonDate string coming in isn't null
         if (jsonDate == null) {
+            // Returns "-" if it is, to indicate that no date was provided
             return "-"
         }
-        // 2
+        // 2 Define a SimpleDateFormat to match the date format returned by iTunes.
         val inFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss",
             Locale.getDefault())
-        // 3
+        // 3 Parse jsonDate string and place it into a Date object named date
         val date = inFormat.parse(jsonDate) ?: return "-"
-        // 4
-        val outputFormat =
-            DateFormat.getDateInstance(DateFormat.SHORT,
-                Locale.getDefault())
-        // 6
+        // 4 Output format is defined as a short date to match the currently defined locale
+        val outputFormat = DateFormat.getDateInstance(DateFormat.SHORT,
+            Locale.getDefault())
+        // 5 Format the date and return it
         return outputFormat.format(date)
     }
 
@@ -31,6 +33,7 @@ object DateUtils {
         return inFormat.parse(date) ?: Date()
     }
 
+    // Creates locale-aware short date string
     fun dateToShortDate(date: Date): String {
         val outputFormat = DateFormat.getDateInstance(
             DateFormat.SHORT, Locale.getDefault())

@@ -13,6 +13,8 @@ class PodcastRepo(private var feedService: FeedService) {
     fun getPodcast(feedUrl: String, callback: (Podcast?) -> Unit) {
         feedService.getFeed(feedUrl) { feedResponse ->
             var podcast: Podcast? = null
+            // If feedResponse is null, pass null to the callBack method. If feedResponse is valid,
+            // then convert it to a Podcast object and pass to the callback method
             if (feedResponse != null) {
                 podcast = rssResponseToPodcast(feedUrl, "", feedResponse)
             }
@@ -22,6 +24,9 @@ class PodcastRepo(private var feedService: FeedService) {
         }
     }
 
+    // Uses the map method to convert a list of EpisodeResponse objects into a list of
+    // Episode objects. The pubDate string is converted to a Date object using the new
+    // xmlDateToDate method.
     private fun rssItemsToEpisodes(episodeResponses:
                                    List<RssFeedResponse.EpisodeResponse>): List<Episode> {
         return episodeResponses.map {
